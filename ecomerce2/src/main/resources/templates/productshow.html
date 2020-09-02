@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Title</title>
+    <th:block th:include="fragment/home_header :: head"></th:block>
+</head>
+<body>
+
+<th:block th:include="fragment/home_header2 :: nav"></th:block>
+<div>
+    <h2>Product details</h2>
+    <div>
+        <form>
+            <div>
+                <label>Product Id</label>
+                <div>
+                    <p th:text="${product.id}">Product id</p>
+                </div>
+            </div>
+            <div>
+                <label>Description</label>
+
+                <div>
+                    <p th:text="${product.description}">Description</p>
+                </div>
+            </div>
+            <div>
+                <label>Price</label>
+
+                <div>
+                    <p th:text="${product.price}">Price</p>
+                </div>
+            </div>
+            <div>
+                <label>Url</label>
+                <div>
+                    <a th:href="@{product.imageUrl}"><p th:text="${product.imageUrl}"></p></a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+</body>
+</html>

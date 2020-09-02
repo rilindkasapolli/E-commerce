@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <style>
+        #image {
+            display: none;
+        }
+
+    </style>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<h1>About</h1>
+<img th:src="@{/images/placeholder.png}" width="700" align="center" id="image"/>
+<img th:src="@{images/placeholder2.png}" width="450"/>
+<button type="button" onclick="showImage()"></a>Show</button>
+
+<script type="text/javascript">
+    function showImage() {
+        var x = document.getElementById("image");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>
+

@@ -17,11 +17,9 @@
     <table class="table table-striped table-hover table-bordered">
         <thead>
         <tr>
-            <th>User ID</th>
-            <th>User Name</th>
-            <th>Password</th>
-            <th>Email</th>
-            <th>Role</th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
             <th>View</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -29,18 +27,12 @@
 
         </tr>
         </thead>
-        <tr th:each="u : ${users}" >
-            <td th:text="${u.id}"></td>
+        <tr th:each="u : ${categories}" >
+            <td th:text="${u.categoryid}"></td>
             <td th:text="${u.name}"></td>
-            <td th:text="${u.password}"></td>
-            <td th:text="${u.email}"></td>
-           <!-- <div  th:each="r : ${u.getRoles()}" th:switch="${u.getRoles()}" >
+            <td th:text="${u.description}"></td>
 
-                <td th:case="${r.getName()=='ROLE_ADMIN'}" th:text="ADMIN"></td>
-                <td th:case="${r.getName()=='ROLE_USER'}" th:text="USER"></td>
-                <td th:case="${r.getName()=='ROLE_ACTUATOR'}" th:text="ACTUATOR"></td>
-
-           </div>-->
+            <!--
             <div  th:each="r : ${u.getRoles()}"  >
 
                 <td th:if="${r.getName()=='ROLE_ADMIN'}" th:text="ADMIN">ADMIN</td>
@@ -48,9 +40,10 @@
                 <td th:if="${r.getName()=='ROLE_ACTUATOR'}" th:text="ACTUATOR">ACTUATOR</td>
 
             </div>
-            <td><a th:href="${ '/user/' + u.id}"/>View</td>
-            <td><a th:href="${'/admin/user/edit/' + u.id}">Edit</a></td>
-            <td><a th:href="${'/admin/user/delete/' + u.id}">Delete</a></td>
+            -->
+            <td><a th:href="${ '/category/' + u.categoryid}"/>View</td>
+            <td><a th:href="${'/category/user/edit/' + u.categoryid}">Edit</a></td>
+            <td><a th:href="${'/category/delete/' + u.categoryid}">Delete</a></td>
         </tr>
 
 

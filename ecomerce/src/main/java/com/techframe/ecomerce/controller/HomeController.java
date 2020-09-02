@@ -17,11 +17,7 @@ public class HomeController {
         this.productServiceM = productServiceM;
     }
 
-    @GetMapping("/home")
-    public String getHome(Model model) {
-        model.addAttribute("name", "Brahim Lokaj");
-        return "home";
-    }
+
 
     @GetMapping("/")
     public String getHome2(Model model) {

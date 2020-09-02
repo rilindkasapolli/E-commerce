@@ -16,31 +16,32 @@
     <div class="container col-md-6 col-md-offset-3">
         <form th:object="${user}" th:action="@{/admin/adduser}" th:method="post">
 
-            <input type="hidden" th:field="*{user_id}"/>
+            <input type="hidden" th:field="*{id}"/>
             <div class="form-group">
                 <label for="name">Username : </label>
-                <input id="name" class="form-control" th:field="*{username}"/>
+                <input id="name" class="form-control" th:field="*{name}"/>
             </div>
             <div class="form-group">
                 <label for="description">Password : </label>
                 <input id="description" class="form-control" th:field="*{password}"/>
             </div>
             <div class="form-group blu-margin">
-                <label for="dropOperator">Role : </label>
-                <select class="form-control" th:field="*{role}"  id="dropOperator">
+                <label for="dropOperator"></label>
+                <select class="form-control" th:field="*{roles}"  id="dropOperator">
 
-                    <option  th:value="ROLE_USER" th:text="ROLE_USER"></option>
-                    <option  th:value="ROLE_ADMIN" th:text="ROLE_ADMIN"></option>
+                    <option th:each="r : ${roles1}" th:value="${r.id}" th:text="${r.name}"></option>
+
                 </select>
             </div>
-
+            <!--<select class="form-control"  th:field="*{roles}" th:each="r : *{roles}" id="dropOperator">
+                <option  th:value="${r.id=='3'}"  th:text="ROLE_USER"></option>
+                <option  th:value="${r.id=='1'}" th:text="ROLE_ADMIN"></option>
+            </select>-->
             <div class="form-group blu-margin">
-                <label for="dropOperatorr">Enabled : </label>
-                <select class="form-control" th:field="*{enabled}"  id="dropOperatorr">
-                    <option  th:value="false" th:text="Disabled"></option>
-                    <option  th:value="true" th:text="Enabled"></option>
-
-                </select>
+                <div class="form-group">
+                    <label for="description">Email : </label>
+                    <input id="email" class="form-control" th:field="*{email}"/>
+                </div>
             </div>
             <br>
             <div class="col-lg-8 col-lg-offset-2 text-center">

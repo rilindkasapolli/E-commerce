@@ -17,7 +17,21 @@ public class Product {
     private String description;
     private String imageUrl;
     private BigDecimal price;
+    private int category_id;
+    @ManyToOne
+    @JoinColumn(name="category_id", nullable=false, insertable = false,updatable = false)
+    private Category category;
 
+    public Product() {
+    }
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
 
     public Integer getId() {
         return id;
@@ -25,6 +39,14 @@ public class Product {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Integer getVersion() {

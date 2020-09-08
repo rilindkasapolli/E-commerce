@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="fragment/home_header"></th:block>
+<body>
+<th:block th:include="fragment/home_header2"></th:block>
+
+<section id="services">
+    <div class="container-fluid">
+
+        <div class="col-lg-12 col-lg-offset-2 text-center">
+            <h2 class="section-heading">Add Subcategory Page</h2>
+            <p>Hey! Please fill out the below information to add a subcategory.</p>
+            <hr class="primary">
+        </div>
+    </div>
+    <div class="container col-md-6 col-md-offset-3">
+        <form th:object="${subcategory}" th:action="@{/subcategory}" th:method="post">
+
+            <input type="hidden" th:field="*{subcategoryid}"/>
+
+            <div class="form-group">
+                <label for="name">Subcategory Name : </label>
+                <input id="name" class="form-control" th:field="*{name}"/>
+            </div>
+            <div class="form-group">
+                <label for="description">Description : </label>
+                <input id="description" class="form-control" th:field="*{description}"/>
+            </div>
+            <div class="form-group blu-margin">
+                <label for="dropOperatorr">Category</label>
+                <select class="form-control" th:field="*{categories}"  id="dropOperatorr">
+
+                        <option  th:each="sc : ${category}" th:value="${sc.categoryid}" th:text="${sc.name}"></option>
+
+                </select>
+            </div>
+            <br>
+
+            <br>
+
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+                <input type="submit" value="submit" class="btn btn-success"/>
+                <a th:href="@{/admin}" class="btn btn-primary">Cancel</a>
+            </div>
+        </form>
+
+
+    </div>
+</section>
+
+
+<th:block th:include="fragment/footer"></th:block>
+</body>
+</html>

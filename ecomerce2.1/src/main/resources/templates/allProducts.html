@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:include="fragment/home_header"></th:block>
+<body>
+<th:block th:include="fragment/home_header2"></th:block>
+<section id="services">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">All our products</h2>
+                <hr class="primary">
+
+            </div>
+
+        </div>
+    </div>
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>URL</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>View</th>
+            <th>Edit</th>
+            <th>Delete</th>
+
+        </tr>
+        </thead>
+        <tr th:each="p : ${products}">
+            <td th:text="${p.productName}"></td>
+            <td th:text="${p.description}"></td>
+            <td th:text="${p.price}"></td>
+            <td th:text="${p.imageUrl}"></td>
+            <!-- categories -->
+            <div  th:each="c : ${p.subcategoryList}"  >
+                <div th:each="ca : ${c.categories}">
+
+                <td th:if="${ca.getName()=='Technology'}" th:text="Technology">Technology</td>
+                <td th:if="${ca.getName()=='Fashion'}" th:text="Fashion">Fashion</td>
+                <td th:if="${ca.getName()=='Sports'}" th:text="Sports">Fashion</td>
+                </div>
+
+            </div>
+            <!-- subcategories -->
+            <div  th:each="cs : ${p.getSubcategoryList()}"  >
+
+                <td th:if="${cs.getName()=='Phones'}" th:text="Phones">Phones</td>
+                <td th:if="${cs.getName()=='Jeans'}" th:text="Jeans">Jeans</td>
+                <td th:if="${cs.getName()=='Football'}" th:text="Football">Jeans</td>
+                <td th:if="${cs.getName()=='Cars'}" th:text="Cars">Cars</td>
+                <td th:if="${cs.getName()=='Basketball'}" th:text="Basketball">Jeans</td>
+
+
+            </div>
+            <td><a th:href="${ '/viewtesting/' + p.idproduct}"/>View</td>
+            <td><a th:href="${'/product/edit/' + p.idproduct}">Edit</a></td>
+            <td><a th:href="${'/viewtesting/delasdeteasdfasasdfasdf/ABasdasS/' + p.idproduct}">Delete</a></td>
+        </tr>
+
+
+    </table>
+</section>
+<th:block th:include="fragment/footer"></th:block>
+</body>
+</html>

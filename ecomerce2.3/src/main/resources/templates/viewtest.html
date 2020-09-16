@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<th:block th:include="fragment/home_header"></th:block>
+
+<body>
+<th:block th:include="fragment/home_header2"></th:block>
+
+
+<section id="services" th:object="${product}">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">View product</h2>
+                <p>Here is the details of the product</p>
+                <hr class="primary">
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+
+                <div class="card mt-4">
+                    <img class="card-img-top img-fluid" th:src="${product.imageUrl}"
+                         style="max-height: 400px; max-width: 500px" alt="">
+                    <div class="card-body">
+                        <h3 class="card-title" th:text="*{productName}"></h3>
+                        <h4 th:text="*{price}"> $</h4>
+                        <p class="card-text" th:text="*{description}"></p>
+
+                        <span class="text-warning" id="text-warning1"><a>&#9734;</a></span>
+                        <a> <span class="text-warning" id="text-warning2">&#9734; </span></a>
+                        <a> <span class="text-warning" id="text-warning3">&#9734; </span></a>
+                        <a><span class="text-warning" id="text-warning4">&#9734; </span></a>
+                        <a><span class="text-warning" id="text-warning5">&#9734; </span></a>
+                        4.0 stars
+                        <form th:object="${product}" th:action="@{delete}" th:method="delete"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <div class="col-lg-8 col-lg-offset-2 text-center">
+
+                                <a th:href="${'/viewtesting/delasdeteasdfasasdfasdf/ABasdasS/' + product.idproduct}"
+                                   class="btn btn-danger">Delete</a>
+                                <a th:href="${'/product/edit/' + product.idproduct}" class="btn btn-success">Edit</a>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header">
+                        Product Reviews
+                    </div>
+                    <div class="card-body">
+                        <div th:each="po :${post }" th:if="${po.product == product.idproduct}">
+                            <p th:text="${po.postdescription}"></p>
+                            <small class="text-muted" th:text="${'Posted by Anonymous'}">Posted by Anonymous on
+                                3/1/17</small>
+                            <hr>
+                        </div>
+                        <a th:href="${'/viewtesting/' + product.idproduct +'/newPost'}" class="btn btn-success">Leave a
+                            Review</a>
+
+                    </div>
+                </div>
+                <!-- /.card -->
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</section>
+<script>
+    document.getElementById("text-warning1").addEventListener("click", function () {
+        document.getElementById("text-warning1").innerHTML = "&#9733;";
+    });
+
+
+    var x = document.getElementsByClassName("text-warning");
+
+</script>
+<th:block th:include="fragment/footer"></th:block>
+
+</body>
+
+</html>

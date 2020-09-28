@@ -1,0 +1,25 @@
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" >
+    <div class="ibox-content m-b-sm border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class=" p-xs col-6 col-sm-3  p-xs">
+
+                    <i class="fa fa-globe text-navy mid-icon"></i>
+
+                    <h2>Reddit</h2>
+                    <a   th:href="${'/'}" >HOME</a>
+                    <a   th:href="${'/subreddit/new'}" sec:authorize="hasRole('ROLE_ADMIN')" >ADD SUBREDDIT</a>
+                    <a   th:href="${'login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
+                    <a  th:href="${'registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+                    <form th:action="@{/logout}" method="post" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                        <input type="submit" value="Logout"/>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>

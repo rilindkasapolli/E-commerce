@@ -1,0 +1,21 @@
+spring:
+  mail:
+
+    host: smtp.gmail.com
+    port: 587
+    username: rk40255@ubt-uni.net
+    password: Genesis039
+    properties:
+
+      mail:
+
+        smtp:
+          auth: true
+          starttls:
+            required: true
+            enable: true
+            connectiontimeout: 5000
+            timeout: 5000
+            writetimeout: 5000
+    protocol: smtp
+    test-connection: false

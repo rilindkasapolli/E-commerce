@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<th:block th:include="fragment/home_header"></th:block>
+
+<body>
+
+
+
+<section id="services" th:object="${post}">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="ibox-content m-b-sm border-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class=" p-xs col-6 col-sm-3  p-xs">
+
+                                <i class="fa fa-globe text-navy mid-icon"></i>
+
+                                <h2>Reddit</h2>
+                                <a   th:href="${'/'}" >HOME</a>
+                                <a   th:href="${'/subreddit/new'}" sec:authorize="hasRole('ROLE_ADMIN')" >ADD SUBREDDIT</a>
+                                <a   th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
+                                <a  th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox-content m-b-sm border-bottom ">
+                    <div class="container">
+                        <div class="row">
+                            <div class="p-xs col-6 col-sm-3 text-info" th:each=" s : ${subreddits}">
+
+                                <a th:href="${'/subreddit/' + s.idsubreddit}" th:text="${s.name}"></a>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-4">
+
+                    <div class="card-body imgcard">
+                        <h3 class="card-title" th:text="*{name}"></h3>
+                        <p th:text="*{description}"> </p>
+                        <p th:text="*{karma}"></p>
+                        <div class=" h-100 row" >
+                            <img class="col-md-5 imagen " src="data:image/jpg;base64,${image}" onerror="this.style.display='none'"  id="postImage" th:src="@{'data:image/jpeg;base64,' + ${imagee}}" style="width:20%;height:20%;"/>
+                        </div>
+
+                        <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
+
+                            <div class="col-1  text-center">
+
+                                <a th:href="${'/subreddit/post/delete/' + post.postid }"
+                                   class="btn btn-danger">Delete</a>
+
+
+                            </div>
+
+                        </form>
+                        <br>
+                        <form th:object="${post}">
+                        <div class="col-1  text-center">
+
+                                <a th:href="${'/subreddit/post/upvote/' + post.postid }"
+                                   class="btn btn-success">Upvote</a>
+                            </div>
+                        </form>
+
+
+                        <br>
+
+
+                      <!--  <form th:object="${product}" th:action="@{delete}" th:method="delete"
+                              sec:authorize="hasRole('ROLE_ADMIN')">
+                            <div class="col-lg-8 col-lg-offset-2 text-center">
+
+                                <a th:href="${'/viewtesting/delasdeteasdfasasdfasdf/ABasdasS/' + product.idproduct}"
+                                   class="btn btn-danger">Delete</a>
+                                <a th:href="${'/product/edit/' + product.idproduct}" class="btn btn-success">Edit</a>
+
+                            </div>
+
+                        </form> -->
+                    </div>
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header">
+                        Comments
+                    </div>
+                    <form th:object="${comment}" th:action="@{/newcomment}" th:method="post" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                        <input type="hidden" th:field="*{commentid}" />
+                        <select class="form-control" id="abcd" th:field="*{post}">
+
+                            <option id="abc" th:value="${post.postid}"></option>
+
+                        </select>
+
+                        <div class="input-group" >
+                            <!--<div class="input-group-prepend">
+                                <span class="input-group-text">With textarea</span>
+                            </div> -->
+                            <textarea class="form-control" th:field="*{description}"  placeholder="Leave a comment!" ></textarea>
+
+                        </div>
+                        <p sec:authorize="!isAuthenticated()"> Log-in or register to leave a comment!</p>
+                        <div class="col-lg-2 col-lg-offset-2 text-center" id="submitcomment" >
+                            <input type="submit" value="submit" class="btn btn-success"/>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="card-body">
+
+                        <div id="comments" th:each="c :${comments }" th:if="${c.post == post.postid}">
+                            <p  id="comdesc" th:text="${c.description}"></p>
+                            <div class="row">
+                            <small class="text-muted  col-9" id="userposted" th:text="${'Posted by Anonymous'}">Posted by Anonymous on
+                                3/1/17</small>
+                                <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
+
+                                    <div class="col-1  text-center">
+                                        <a th:href="${'/subreddit/post/comment/delete/' + c.getCommentid() }"
+                                           class="btn btn-danger">x</a>
+                                    </div>
+                                </form>
+
+                            <hr>
+                        </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <!-- /.card -->
+
+            </div>
+
+
+        </div>
+    </div>
+
+
+</section>
+<script>
+    var abcd = document.getElementById('abcd');
+    abcd.style.visibility = 'hidden';
+
+
+
+
+
+
+
+
+</script>
+<th:block th:include="fragment/footer"></th:block>
+
+</body>
+
+</html>

@@ -4,14 +4,14 @@ package reddit.example.simpleforumgmail.models;
 import javax.persistence.*;
 import java.util.Set;
 
-@Entity(name="subreddit")
+@Entity(name = "subreddit")
 public class Subreddit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idsubreddit;
     private String name;
 
-    public Subreddit(){
+    public Subreddit() {
 
     }
 

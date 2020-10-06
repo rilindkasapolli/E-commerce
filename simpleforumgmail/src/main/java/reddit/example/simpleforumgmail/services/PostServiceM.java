@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 import reddit.example.simpleforumgmail.models.Post;
 import reddit.example.simpleforumgmail.repository.PostRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 
 @Service
-public class PostServiceM implements PostService{
+public class PostServiceM implements PostService {
     @Autowired
     private PostRepository postRepository;
 
@@ -42,8 +43,17 @@ public class PostServiceM implements PostService{
 
 
     private static final Logger logger = LoggerFactory.getLogger("DocStorageService.class");
+
+    public List<Post> listAllSearch(String keyword) {
+        if (keyword != null) {
+            return postRepository.search(keyword);
+        }
+        return (List<Post>) postRepository.findAll();
+    }
+
     @Autowired
     private PostRepository dao;
+
 
     public int saveImage(Post model) {
         try {

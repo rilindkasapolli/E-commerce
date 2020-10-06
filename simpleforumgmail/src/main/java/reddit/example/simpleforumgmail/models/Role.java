@@ -16,6 +16,7 @@ public class Role {
 
     public Role() {
     }
+
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
     private Set<User> users;

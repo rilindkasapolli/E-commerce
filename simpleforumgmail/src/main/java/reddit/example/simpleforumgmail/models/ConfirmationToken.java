@@ -5,12 +5,13 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "confirmationtoken")
 public class ConfirmationToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 
-    private long tokenid;
+    private int tokenid;
 
 
     private String confirmationtoken;
@@ -32,11 +33,11 @@ public class ConfirmationToken {
 
     }
 
-    public long getTokenid() {
+    public int getTokenid() {
         return tokenid;
     }
 
-    public void setTokenid(long tokenid) {
+    public void setTokenid(int tokenid) {
         this.tokenid = tokenid;
     }
 

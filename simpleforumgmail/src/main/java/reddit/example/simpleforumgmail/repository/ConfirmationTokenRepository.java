@@ -5,5 +5,5 @@ import reddit.example.simpleforumgmail.models.ConfirmationToken;
 
 public interface ConfirmationTokenRepository extends CrudRepository<ConfirmationToken, String> {
 
-    ConfirmationToken findByConfirmationToken(String confirmationToken);
+    ConfirmationToken findByConfirmationtoken(String confirmationToken);
 }

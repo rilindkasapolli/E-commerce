@@ -1,7 +1,6 @@
 package reddit.example.simpleforumgmail.security;
 
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
     @Autowired
-   public static RoleServiceM roleServiceM;
+    public static RoleServiceM roleServiceM;
 
     private static final long serialVersionUID = 1L;
     private User user;
@@ -35,10 +34,10 @@ public class AuthenticatedUser extends org.springframework.security.core.userdet
 
         Role role = roleServiceM.getRoleById(user.getRole());
 
-            if (role.getName() == "ROLE_ADMIN") {
-                authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
-            }
-            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (role.getName() == "ROLE_ADMIN") {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
 
         return authorities;

@@ -6,13 +6,13 @@ import reddit.example.simpleforumgmail.models.Subreddit;
 import reddit.example.simpleforumgmail.repository.SubredditRepository;
 
 @Service
-public class SubredditServiceM implements SubredditService{
+public class SubredditServiceM implements SubredditService {
 
     private SubredditRepository subredditRepository;
 
     @Autowired
-    private void setSubredditRepository (SubredditRepository subredditRepository){
-        this.subredditRepository=subredditRepository;
+    private void setSubredditRepository(SubredditRepository subredditRepository) {
+        this.subredditRepository = subredditRepository;
     }
 
     @Override

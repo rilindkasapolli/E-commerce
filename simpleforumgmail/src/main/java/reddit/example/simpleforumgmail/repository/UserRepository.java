@@ -8,5 +8,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     User findUserByName(String username);
 
     User findByEmail(String email);
-    User findByEmailIgnoreCase(String email);
+
+
 }

@@ -1,7 +1,6 @@
 package reddit.example.simpleforumgmail.services;
 
 
-
 import reddit.example.simpleforumgmail.models.Role;
 import reddit.example.simpleforumgmail.models.User;
 

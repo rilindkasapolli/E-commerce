@@ -27,6 +27,8 @@
                 <input type="password" id="password" class="form-control" name="password" placeholder="Enter Password"
                        autofocus="autofocus">
             </div>
+
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">
@@ -35,6 +37,7 @@
                     </div>
                 </div>
             </div>
+            <a class="btn btn-primary" href="/oauth2/authorization/google" sec:authorize="!isAuthenticated()">Google</a>
             <div class="form-group">
                 <span>New user? <a href="/" th:href="@{/registration}">Register here</a></span>
             </div>

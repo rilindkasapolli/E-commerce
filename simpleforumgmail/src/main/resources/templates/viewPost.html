@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <th:block th:include="fragment/home_header"></th:block>
 
 <body>
-
 
 
 <section id="services" th:object="${post}">
@@ -22,11 +20,22 @@
                                 <i class="fa fa-globe text-navy mid-icon"></i>
 
                                 <h2>Reddit</h2>
-                                <a   th:href="${'/'}" >HOME</a>
-                                <a   th:href="${'/subreddit/new'}" sec:authorize="hasRole('ROLE_ADMIN')" >ADD SUBREDDIT</a>
-                                <a   th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
-                                <a  th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+                                <a th:href="${'/'}">HOME</a>
+                                <a th:href="${'/subreddit/new'}" sec:authorize="hasRole('ROLE_ADMIN')">ADD SUBREDDIT</a>
+                                <a th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
+                                <a th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+                                <form th:action="@{/logout}" method="post"
+                                      sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                                    <input type="submit" value="Logout"/>
+                                </form>
                             </div>
+                            <form th:action="@{/a}">
+                                Filter: <input type="text" name="keyword" id="keyword" size="50"/>
+                                &nbsp;
+                                <input type="submit" value="Search"/>
+                                &nbsp;
+                                <input type="button" value="Clear" id="btnClear" onclick="clearSearch()"/>
+                            </form>
 
                         </div>
                     </div>
@@ -47,10 +56,13 @@
 
                     <div class="card-body imgcard">
                         <h3 class="card-title" th:text="*{name}"></h3>
-                        <p th:text="*{description}"> </p>
+                        <p th:text="*{description}"></p>
                         <p th:text="*{karma}"></p>
-                        <div class=" h-100 row" >
-                            <img class="col-md-5 imagen " src="data:image/jpg;base64,${image}" onerror="this.style.display='none'"  id="postImage" th:src="@{'data:image/jpeg;base64,' + ${imagee}}" style="width:20%;height:20%;"/>
+                        <p th:text="*{username}"></p>
+                        <div class=" h-100 row">
+                            <img class="col-md-5 imagen " src="data:image/jpg;base64,${image}"
+                                 onerror="this.style.display='none'" id="postImage"
+                                 th:src="@{'data:image/jpeg;base64,' + ${imagee}}" style="width:20%;height:20%;"/>
                         </div>
 
                         <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
@@ -66,7 +78,7 @@
                         </form>
                         <br>
                         <form th:object="${post}">
-                        <div class="col-1  text-center">
+                            <div class="col-1  text-center">
 
                                 <a th:href="${'/subreddit/post/upvote/' + post.postid }"
                                    class="btn btn-success">Upvote</a>
@@ -77,17 +89,17 @@
                         <br>
 
 
-                      <!--  <form th:object="${product}" th:action="@{delete}" th:method="delete"
-                              sec:authorize="hasRole('ROLE_ADMIN')">
-                            <div class="col-lg-8 col-lg-offset-2 text-center">
+                        <!--  <form th:object="${product}" th:action="@{delete}" th:method="delete"
+                                sec:authorize="hasRole('ROLE_ADMIN')">
+                              <div class="col-lg-8 col-lg-offset-2 text-center">
 
-                                <a th:href="${'/viewtesting/delasdeteasdfasasdfasdf/ABasdasS/' + product.idproduct}"
-                                   class="btn btn-danger">Delete</a>
-                                <a th:href="${'/product/edit/' + product.idproduct}" class="btn btn-success">Edit</a>
+                                  <a th:href="${'/viewtesting/delasdeteasdfasasdfasdf/ABasdasS/' + product.idproduct}"
+                                     class="btn btn-danger">Delete</a>
+                                  <a th:href="${'/product/edit/' + product.idproduct}" class="btn btn-success">Edit</a>
 
-                            </div>
+                              </div>
 
-                        </form> -->
+                          </form> -->
                     </div>
                 </div>
                 <!-- /.card -->
@@ -96,23 +108,27 @@
                     <div class="card-header">
                         Comments
                     </div>
-                    <form th:object="${comment}" th:action="@{/newcomment}" th:method="post" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
-                        <input type="hidden" th:field="*{commentid}" />
+                    <form th:object="${comment}" th:action="@{/newcomment}" th:method="post"
+                          sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+                        <input type="hidden" th:field="*{commentid}"/>
+
                         <select class="form-control" id="abcd" th:field="*{post}">
 
                             <option id="abc" th:value="${post.postid}"></option>
 
                         </select>
 
-                        <div class="input-group" >
+
+                        <div class="input-group">
                             <!--<div class="input-group-prepend">
                                 <span class="input-group-text">With textarea</span>
                             </div> -->
-                            <textarea class="form-control" th:field="*{description}"  placeholder="Leave a comment!" ></textarea>
+                            <textarea class="form-control" th:field="*{description}"
+                                      placeholder="Leave a comment!"></textarea>
 
                         </div>
                         <p sec:authorize="!isAuthenticated()"> Log-in or register to leave a comment!</p>
-                        <div class="col-lg-2 col-lg-offset-2 text-center" id="submitcomment" >
+                        <div class="col-lg-2 col-lg-offset-2 text-center" id="submitcomment">
                             <input type="submit" value="submit" class="btn btn-success"/>
                         </div>
                     </form>
@@ -120,32 +136,34 @@
                     <div class="card-body">
 
                         <div id="comments" th:each="c :${comments }" th:if="${c.post == post.postid}">
-                            <p  id="comdesc" th:text="${c.description}"></p>
+                            <p id="comdesc" th:text="${c.description}"></p>
                             <div class="row">
-                            <small class="text-muted  col-9" id="userposted" th:text="${'Posted by Anonymous'}">Posted by Anonymous on
-                                3/1/17</small>
-                                <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
+                                <small class="text-muted  col-9" id="userposted"
+                                       th:text="${'Posted by ' + c.username}"></small>
+                                <div th:if="${#authentication.getName()==c.email}">
+                                    <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
 
-                                    <div class="col-1  text-center">
-                                        <a th:href="${'/subreddit/post/comment/delete/' + c.getCommentid() }"
-                                           class="btn btn-danger">x</a>
-                                    </div>
-                                </form>
+                                        <div class="col-1  text-center">
+                                            <a th:href="${'/subreddit/post/comment/delete/' + c.getCommentid() }"
+                                               class="btn btn-danger">x</a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
 
                             <hr>
                         </div>
-                        </div>
-
-
-
                     </div>
+
+
                 </div>
-                <!-- /.card -->
-
             </div>
-
+            <!-- /.card -->
 
         </div>
+
+
+    </div>
     </div>
 
 
@@ -153,12 +171,13 @@
 <script>
     var abcd = document.getElementById('abcd');
     abcd.style.visibility = 'hidden';
+    var abcde = document.getElementById('abcde');
+    abcd.style.visibility = 'hidden';
 
+    function myFunction() {
 
-
-
-
-
+        document.getElementById("deletefunction").style.visibility = 'hidden';
+    }
 
 
 </script>

@@ -2,7 +2,6 @@ package reddit.example.simpleforumgmail.services;
 
 
 import reddit.example.simpleforumgmail.models.User;
-import reddit.example.simpleforumgmail.web.UserRegistrationDto;
 
 public interface UserService {
     Iterable<User> listAllUsers();
@@ -11,9 +10,12 @@ public interface UserService {
 
     User saveUsers(User users);
 
-    User save(UserRegistrationDto registrationDto);
+    User save(User registrationDto);
+
 
     User getUsersByUsername(String username);
+
+    User findByEmailIgnoreCase(String email);
 
 
 }

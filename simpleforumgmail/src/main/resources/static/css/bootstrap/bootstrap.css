@@ -209,9 +209,11 @@ img {
     vertical-align: middle;
     border-style: none;
 }
+
 img[src=""] {
     display: none;
 }
+
 svg:not(:root) {
     overflow: hidden;
 }

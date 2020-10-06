@@ -6,7 +6,6 @@
 <body>
 
 
-
 <section id="services" th:object="${post}">
 
     <div class="container">
@@ -14,18 +13,16 @@
             <div class="col-lg-9">
 
 
-
                 <div class="card card-outline-secondary my-4">
                     <div class="card-header">
                         New Subreddit
                     </div>
                     <form th:object="${subreddit}" th:action="@{/newsubreddit}" th:method="post">
-                        <input type="hidden" th:field="*{idsubreddit}" />
+                        <input type="hidden" th:field="*{idsubreddit}"/>
                         <div class="input-group mb-3">
-                            <input type="text" id="inputtitle" th:field="*{name}" class="form-control" placeholder="Leave a title!" aria-label="Username" aria-describedby="basic-addon1">
+                            <input type="text" id="inputtitle" th:field="*{name}" class="form-control"
+                                   placeholder="Leave a title!" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
-
-
 
 
                         <div class="col-lg-2 col-lg-offset-2 text-center" id="submitcomment">

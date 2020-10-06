@@ -2,27 +2,31 @@ package reddit.example.simpleforumgmail.models;
 
 
 import com.sun.istack.Nullable;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Entity(name="post")
+@Entity(name = "post")
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int postid;
-
+    @Column(name = "name")
     private String name;
     private String description;
     private int karma;
-
+    private String username;
+    @OneToMany(mappedBy = "postreview", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Review> reviews = new HashSet<Review>(0);
     @Lob
     @Nullable
     private byte[] image;
 
-    public Post(){
+    public Post() {
 
     }
 
@@ -30,12 +34,17 @@ public class Post {
     private int subreddit;
 
 
-
-
-
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
     private Set<Comment> comments;
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
 
     public String getDescription() {
         return description;
@@ -43,6 +52,14 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getKarma() {
@@ -105,4 +122,5 @@ public class Post {
     public void setName(String postname) {
         this.name = postname;
     }
+
 }

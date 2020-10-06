@@ -1,8 +1,13 @@
 package reddit.example.simpleforumgmail.models;
 
 
+import com.sun.istack.NotNull;
+import com.sun.istack.Nullable;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -15,18 +20,36 @@ public class User {
     private String email;
     private String password;
 
-
-
-
+    @OneToMany(mappedBy = "userreview", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Review> reviews = new HashSet<Review>(0);
+    private boolean enabled;
 
 
     public User() {
     }
+
     @Column(name = "role_id")
     private int role;
 
     public int getRole() {
         return role;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public void setRole(int role) {

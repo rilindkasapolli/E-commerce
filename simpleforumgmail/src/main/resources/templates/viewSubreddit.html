@@ -8,86 +8,98 @@
             <div class="wrapper wrapper-content animated fadeInRight">
 
 
+            </div>
+            <div class="ibox-content m-b-sm border-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class=" p-xs col-6 col-sm-3  p-xs">
 
-                </div>
-                <div class="ibox-content m-b-sm border-bottom">
-                    <div class="container">
-                        <div class="row">
-                            <div class=" p-xs col-6 col-sm-3  p-xs">
+                            <i class="fa fa-globe text-navy mid-icon"></i>
 
-                                <i class="fa fa-globe text-navy mid-icon"></i>
-
-                                <h2>Reddit</h2>
-                                <a  th:href="${'/'}" >HOME</a>
-                                <a th:href="${'/subreddit/' + subreddit.idsubreddit + '/newPost'}" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')" >NEW POST</a>
-                                <a   th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
-                                <a  th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
-                            </div>
-
+                            <h2>Reddit</h2>
+                            <a th:href="${'/'}">HOME</a>
+                            <a th:href="${'/subreddit/' + subreddit.idsubreddit + '/newPost'}"
+                               sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">NEW POST</a>
+                            <a th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
+                            <a th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+                            <form th:action="@{/a}">
+                                Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"
+                                               required/>
+                                &nbsp;
+                                <input type="submit" value="Search"/>
+                                &nbsp;
+                                <input type="button" value="Clear" id="btnClear" onclick="clearSearch()"/>
+                            </form>
                         </div>
+
                     </div>
                 </div>
+            </div>
 
-                <div class="ibox-content m-b-sm border-bottom ">
-                    <div class="container">
-                        <div class="row">
-                            <div class="p-xs col-6 col-sm-3 text-info" th:each="sub : ${subreddits}">
+            <div class="ibox-content m-b-sm border-bottom ">
+                <div class="container">
+                    <div class="row">
+                        <div class="p-xs col-6 col-sm-3 text-info" th:each="sub : ${subreddits}">
 
-                                <a th:href="${ sub.idsubreddit}" th:text="${sub.name}"></a>
-                                <span></span>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="ibox-content forum-container" >
-
-                    <div class="forum-title">
-                        <div class="pull-right forum-desc">
-
-                        </div>
-                        <h3 th:text="${subreddit.name}">Posts</h3>
-                        <form th:object="${subreddit}" th:action="@{deletesubreddit}" th:method="delete">
-
-                            <div class="col-1  text-center">
-
-                                <a th:href="${'/subreddit/delete/' + subreddit.idsubreddit }"
-                                   class="btn btn-danger">Delete</a>
-
-
-                            </div>
-
-                        </form>
-                    </div>
-
-
-                    <div class="forum-item" th:each=" p : ${posts}" th:if="${p.subreddit == subreddit.idsubreddit}">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="forum-icon">
-                                    <i class="fa fa-bolt"></i>
-                                </div>
-                                <a href="forum_post.html" class="forum-item-title" th:text="${p.name}" th:href="${'post/'+ p.postid}">Introductions</a>
-                                <div class="forum-sub-title" th:text="${p.description}" >New to the community? Please stop by, say hi and tell us a bit about yourself. </div>
-                            </div>
-                            <div class="col-md-1 forum-info">
-                            <span class="views-number">
-                                890
-                            </span>
-                                <div>
-                                    <small>Views</small>
-                                </div>
-                            </div>
-
+                            <a th:href="${ sub.idsubreddit}" th:text="${sub.name}"></a>
+                            <span></span>
 
                         </div>
                     </div>
                 </div>
             </div>
+
+
+            <div class="ibox-content forum-container">
+
+                <div class="forum-title">
+                    <div class="pull-right forum-desc">
+
+                    </div>
+                    <h3 th:text="${subreddit.name}">Posts</h3>
+                    <form th:object="${subreddit}" th:action="@{deletesubreddit}" sec:authorize="hasRole('ROLE_ADMIN')"
+                          th:method="delete">
+
+                        <div class="col-1  text-center">
+
+                            <a th:href="${'/subreddit/delete/' + subreddit.idsubreddit }"
+                               class="btn btn-danger">Delete</a>
+
+
+                        </div>
+
+                    </form>
+                </div>
+
+
+                <div class="forum-item" th:each=" p : ${posts}" th:if="${p.subreddit == subreddit.idsubreddit}">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="forum-icon">
+                                <i class="fa fa-bolt"></i>
+                            </div>
+                            <a href="forum_post.html" class="forum-item-title" th:text="${p.name}"
+                               th:href="${'post/'+ p.postid}">Introductions</a>
+                            <div class="forum-sub-title" th:text="${p.description}">New to the community? Please stop
+                                by, say hi and tell us a bit about yourself.
+                            </div>
+                        </div>
+                        <div class="col-md-1 forum-info">
+                            <span class="views-number">
+                                890
+                            </span>
+                            <div>
+                                <small>Views</small>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
 </div>
 <th:block th:include="fragment/footer"></th:block>

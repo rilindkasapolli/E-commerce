@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 import reddit.example.simpleforumgmail.models.User;
 import reddit.example.simpleforumgmail.repository.UserRepository;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

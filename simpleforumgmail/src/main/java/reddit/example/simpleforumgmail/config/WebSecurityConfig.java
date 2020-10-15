@@ -3,8 +3,6 @@ package reddit.example.simpleforumgmail.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,10 +15,8 @@ import org.springframework.security.oauth2.client.web.HttpSessionOAuth2Authoriza
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import reddit.example.simpleforumgmail.security.CustomAuthenticationSuccessHandler;
 import reddit.example.simpleforumgmail.security.CustomOidcUserService;
-import reddit.example.simpleforumgmail.security.JwtAuthenticationEntryPoint;
-import reddit.example.simpleforumgmail.security.JwtAuthenticationFilter;
+
 
 import javax.sql.DataSource;
 
@@ -53,6 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -82,9 +79,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(24 * 60 * 60)
                 .and()
-                .exceptionHandling().and().oauth2Login().authorizationEndpoint()
+                .exceptionHandling().and().oauth2Login().authorizationEndpoint().authorizationRequestRepository(customAuthorizationRequestRepository())
                 .baseUri("/oauth2/authorization")
-                .authorizationRequestRepository(customAuthorizationRequestRepository()).and().redirectionEndpoint()
+                .and()
+                .redirectionEndpoint()
                 .baseUri("/oauth2/callback/*").and().userInfoEndpoint()
                 .oidcUserService(customOidcUserService).and().loginPage("/newLogin");
     }

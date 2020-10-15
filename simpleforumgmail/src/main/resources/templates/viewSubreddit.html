@@ -21,9 +21,10 @@
                             <a th:href="${'/subreddit/' + subreddit.idsubreddit + '/newPost'}"
                                sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">NEW POST</a>
                             <a th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
+                            <a th:href="${'/profile/'+#authentication.name }" sec:authorize="isAuthenticated()">PROFILE</a>
                             <a th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
                             <form th:action="@{/a}">
-                                Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}"
+                                Filter: <input type="text" name="keyword" id="keyword" size="50"
                                                required/>
                                 &nbsp;
                                 <input type="submit" value="Search"/>

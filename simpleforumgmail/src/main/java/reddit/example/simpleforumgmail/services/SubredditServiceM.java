@@ -30,11 +30,6 @@ public class SubredditServiceM implements SubredditService {
         return subredditRepository.save(subreddit);
     }
 
-    @Override
-    public Subreddit getSubredditByName(String name) {
-        return subredditRepository.findSubredditByName(name);
-    }
-
     public void deleteSubreddit(Integer id) {
         subredditRepository.deleteById(id);
     }

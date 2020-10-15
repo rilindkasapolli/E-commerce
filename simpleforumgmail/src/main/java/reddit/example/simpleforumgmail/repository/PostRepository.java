@@ -2,12 +2,12 @@ package reddit.example.simpleforumgmail.repository;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-
+import org.springframework.stereotype.Repository;
 import reddit.example.simpleforumgmail.models.Post;
 
 import java.util.List;
 
-
+@Repository
 public interface PostRepository extends CrudRepository<Post, Integer> {
 
 
@@ -17,6 +17,8 @@ public interface PostRepository extends CrudRepository<Post, Integer> {
     Post findPostByName(String name);
 
     List<Post> findTop5ByOrderByKarmaDesc();
+
+    List<Post> findByEmailContainingOrderByTimeCreatedDesc(String email);
 
 
 }

@@ -5,9 +5,8 @@ import com.sun.istack.NotNull;
 import com.sun.istack.Nullable;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import javax.validation.constraints.Size;
+import java.util.*;
 
 
 @Entity
@@ -15,21 +14,55 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private int id;
     private String name;
-    private String email;
-    private String password;
 
-    @OneToMany(mappedBy = "userreview", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Review> reviews = new HashSet<Review>(0);
+    @NotNull
+    @Size(min=12, max=50)
+    private String email;
+
+    private String password;
+    @Column(name = "about")
+    private String about;
+    @Lob
+    @Nullable
+    private byte[] profilepicture;
+
+
     private boolean enabled;
 
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    private Set<Post> posts;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+
+    private Set<Likes> likes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+
+    private Set<CommentLikes> commentlikes;
+
+
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+
+    private Set<Comment> comments;
 
     public User() {
     }
 
     @Column(name = "role_id")
     private int role;
+
+    public Set<CommentLikes> getCommentlikes() {
+        return commentlikes;
+    }
+
+    public void setCommentlikes(Set<CommentLikes> commentlikes) {
+        this.commentlikes = commentlikes;
+    }
 
     public int getRole() {
         return role;
@@ -39,12 +72,38 @@ public class User {
         return enabled;
     }
 
-    public Set<Review> getReviews() {
-        return reviews;
+    public Set<Likes> getLikes() {
+        return likes;
     }
 
-    public void setReviews(Set<Review> reviews) {
-        this.reviews = reviews;
+    public void setLikes(Set<Likes> likes) {
+        this.likes = likes;
+    }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
 
@@ -56,11 +115,19 @@ public class User {
         this.role = role;
     }
 
-    public Integer getId() {
+    public byte[] getProfilepicture() {
+        return profilepicture;
+    }
+
+    public void setProfilepicture(byte[] profilepicture) {
+        this.profilepicture = profilepicture;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

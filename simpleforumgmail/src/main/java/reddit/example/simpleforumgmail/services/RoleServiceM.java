@@ -1,11 +1,9 @@
 package reddit.example.simpleforumgmail.services;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reddit.example.simpleforumgmail.models.Role;
 import reddit.example.simpleforumgmail.repository.RoleRepository;
-
 import java.util.List;
 
 @Service

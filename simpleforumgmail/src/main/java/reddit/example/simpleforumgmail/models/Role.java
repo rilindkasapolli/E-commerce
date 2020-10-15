@@ -1,7 +1,6 @@
 package reddit.example.simpleforumgmail.models;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Entity

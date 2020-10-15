@@ -6,7 +6,7 @@
 <body>
 
 
-<section id="services" th:object="${post}">
+<section id="services" >
 
     <div class="container">
         <div class="row">
@@ -24,6 +24,7 @@
                                 <a th:href="${'/subreddit/new'}" sec:authorize="hasRole('ROLE_ADMIN')">ADD SUBREDDIT</a>
                                 <a th:href="@{'/login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
                                 <a th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+                                <a th:href="${'/profile/'+#authentication.name }" sec:authorize="isAuthenticated()">PROFILE</a>
                                 <form th:action="@{/logout}" method="post"
                                       sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
                                     <input type="submit" value="Logout"/>
@@ -55,18 +56,16 @@
                 <div class="card mt-4">
 
                     <div class="card-body imgcard">
-                        <h3 class="card-title" th:text="*{name}"></h3>
-                        <p th:text="*{description}"></p>
-                        <p th:text="*{karma}"></p>
-                        <p th:text="*{username}"></p>
+                        <small  th:text="${'Posted by ' + userid.findByEmailIgnoreCase(post.email).getName() + ' '+ post.givenTwoDateTimes(post.timeCreated,dateNow)+ ' ago'}"  ></small>
+
+                        <p th:text="*{post.description}"></p>
+                        <p th:text="${likes}"></p>
                         <div class=" h-100 row">
                             <img class="col-md-5 imagen " src="data:image/jpg;base64,${image}"
                                  onerror="this.style.display='none'" id="postImage"
                                  th:src="@{'data:image/jpeg;base64,' + ${imagee}}" style="width:20%;height:20%;"/>
                         </div>
-
-                        <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
-
+                        <div  th:if="${ #authorization.getAuthentication().name == adminemail  or  #authentication.getName() == post.email  }">
                             <div class="col-1  text-center">
 
                                 <a th:href="${'/subreddit/post/delete/' + post.postid }"
@@ -74,16 +73,18 @@
 
 
                             </div>
+                        </div>
 
-                        </form>
+
                         <br>
-                        <form th:object="${post}">
-                            <div class="col-1  text-center">
+
+                            <div class="col-1  text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
 
                                 <a th:href="${'/subreddit/post/upvote/' + post.postid }"
                                    class="btn btn-success">Upvote</a>
                             </div>
-                        </form>
+
+
 
 
                         <br>
@@ -117,8 +118,11 @@
                             <option id="abc" th:value="${post.postid}"></option>
 
                         </select>
+                        <select class="form-control" id="abcde" th:field="*{postname}">
 
+                            <option id="ab" th:value="${post.name}"></option>
 
+                        </select>
                         <div class="input-group">
                             <!--<div class="input-group-prepend">
                                 <span class="input-group-text">With textarea</span>
@@ -134,12 +138,28 @@
                     </form>
                     <br>
                     <div class="card-body">
-
-                        <div id="comments" th:each="c :${comments }" th:if="${c.post == post.postid}">
+                    <div id="comments" th:each="c :${comments }" th:if="${c.post == post.postid}">
                             <p id="comdesc" th:text="${c.description}"></p>
+                        <div class="row col-lg-4">
+                        <div class="col-md-3 forum-info">
+                                                    <span class="views-number" th:text="${c.commentkarma}">
+                                                                 890
+                                                        </span>
+
+                            <div>
+                                <small>Likes</small>
+                            </div>
+                        </div>
+                            <div class="col-1  text-center" sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">
+
+                                <a th:href="${'/subreddit/comment/upvote/' + c.getCommentid() }"
+                                   class="btn btn-success">Upvote</a>
+
+                        </div>
+                        </div>
                             <div class="row">
                                 <small class="text-muted  col-9" id="userposted"
-                                       th:text="${'Posted by ' + c.username}"></small>
+                                       th:text="${'Posted by ' + c.username + ' '+ c.givenTwoDateTimes(c.timeCreated,dateNow)+ ' ago'}"></small>
                                 <div th:if="${#authentication.getName()==c.email}">
                                     <form th:object="${post}" th:action="@{deletepost}" th:method="delete">
 
@@ -148,6 +168,7 @@
                                                class="btn btn-danger">x</a>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
 
@@ -171,8 +192,9 @@
 <script>
     var abcd = document.getElementById('abcd');
     abcd.style.visibility = 'hidden';
+
     var abcde = document.getElementById('abcde');
-    abcd.style.visibility = 'hidden';
+    abcde.style.visibility = 'hidden';
 
     function myFunction() {
 
@@ -186,3 +208,5 @@
 </body>
 
 </html>
+
+

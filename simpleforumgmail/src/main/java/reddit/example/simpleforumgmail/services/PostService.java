@@ -1,7 +1,6 @@
 package reddit.example.simpleforumgmail.services;
 
 import reddit.example.simpleforumgmail.models.Post;
-import reddit.example.simpleforumgmail.models.Subreddit;
 
 public interface PostService {
 

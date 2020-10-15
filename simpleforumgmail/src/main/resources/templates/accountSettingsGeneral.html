@@ -1,0 +1,284 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<th:block th:include="fragment/fragmenttest2"></th:block>
+
+<div class="container light-style flex-grow-1 container-p-y" >
+    <form th:action="@{/newsettings}" th:object="${user}" th:method="post" id="myForm" enctype="multipart/form-data">
+    <h4 class="font-weight-bold py-3 mb-4">
+        Account settings
+    </h4>
+
+    <div class="card overflow-hidden">
+        <div class="row no-gutters row-bordered row-border-light">
+            <div class="col-md-3 pt-0">
+                <div class="list-group list-group-flush account-settings-links">
+                    <a class="list-group-item list-group-item-action active" data-toggle="list" >General</a>
+                    <a class="list-group-item list-group-item-action"  th:href="${'/profile/'+ user.getEmail() + '/settings/newpassword'}">Change password</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#">Info</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#">Social links</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#">Connections</a>
+                    <a class="list-group-item list-group-item-action" data-toggle="list" href="#">Notifications</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+
+                    <div class="tab-pane fade active show" id="account-general">
+
+                        <div class="card-body media align-items-center">
+                            <div class=" h-100 row">
+                                <img class="d-block ui-w-80 imagen" src="data:image/jpg;base64,${profilepicture}"
+                                     onerror="this.style.display='none'" id="postImage"
+                                     th:src="@{'data:image/jpeg;base64,' + ${imagee}}"  style="width:20%;height:20%;"/>
+                            </div>
+
+                            <div class="media-body ml-4">
+
+                                <label class="btn btn-outline-primary">
+                                    Upload new photo
+                                    <input type="file"  name="file"  class="account-settings-fileinput" id="files" th:value="${user.profilepicture}">
+                                </label> &nbsp;
+                                <button type="button" class="btn btn-default md-btn-flat">Reset</button>
+
+                                <div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+                            </div>
+                        </div>
+                        <hr class="border-light m-0">
+
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="input-group mb-3">
+                                    <label for="inputtitle">Name</label>
+                                    <input type="text" id="inputtitle" name="name" th:name="name" class="form-control"
+                                           th:placeholder="${user.getName()}" th:value="${user.name}" aria-label="Username" aria-describedby="basic-addon1">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+
+                                <div class="alert alert-warning mt-3" th:if="${user.isEnabled()==false}" >
+                                    Your email is not confirmed. Please check your inbox.<br>
+                                    <a href="javascript:void(0)">Resend confirmation</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="about">About</label>
+                            <textarea class="form-control" id="about" th:name="about" th:placeholder="${user.getAbout()}" th:value="${user.about}"  aria-label="Username" aria-describedby="basic-addon1"></textarea>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade" id="account-change-password">
+                        <div class="card-body pb-2">
+
+                            <div class="form-group">
+                                <label class="form-label">Current password</label>
+                                <input type="password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">New password</label>
+                                <input type="password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Repeat new password</label>
+                                <input type="password" class="form-control">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-info">
+                        <div class="card-body pb-2">
+
+                            <div class="form-group">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-control" rows="5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nunc arcu, dignissim sit amet sollicitudin iaculis, vehicula id urna. Sed luctus urna nunc. Donec fermentum, magna sit amet rutrum pretium, turpis dolor molestie diam, ut lacinia diam risus eleifend sapien. Curabitur ac nibh nulla. Maecenas nec augue placerat, viverra tellus non, pulvinar risus.</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Birthday</label>
+                                <input type="text" class="form-control" value="May 3, 1995">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Country</label>
+                                <select class="custom-select">
+                                    <option>USA</option>
+                                    <option selected="">Canada</option>
+                                    <option>UK</option>
+                                    <option>Germany</option>
+                                    <option>France</option>
+                                </select>
+                            </div>
+
+
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body pb-2">
+
+                            <h6 class="mb-4">Contacts</h6>
+                            <div class="form-group">
+                                <label class="form-label">Phone</label>
+                                <input type="text" class="form-control" value="+0 (123) 456 7891">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Website</label>
+                                <input type="text" class="form-control" value="">
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="tab-pane fade" id="account-social-links">
+                        <div class="card-body pb-2">
+
+                            <div class="form-group">
+                                <label class="form-label">Twitter</label>
+                                <input type="text" class="form-control" value="https://twitter.com/user">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Facebook</label>
+                                <input type="text" class="form-control" value="https://www.facebook.com/user">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Google+</label>
+                                <input type="text" class="form-control" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">LinkedIn</label>
+                                <input type="text" class="form-control" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Instagram</label>
+                                <input type="text" class="form-control" value="https://www.instagram.com/user">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-connections">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-twitter">Connect to <strong>Twitter</strong></button>
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body">
+                            <h5 class="mb-2">
+                                <a href="javascript:void(0)" class="float-right text-muted text-tiny"><i class="ion ion-md-close"></i> Remove</a>
+                                <i class="ion ion-logo-google text-google"></i>
+                                You are connected to Google:
+                            </h5>
+                            nmaxwell@mail.com
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-facebook">Connect to <strong>Facebook</strong></button>
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-instagram">Connect to <strong>Instagram</strong></button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="account-notifications">
+                        <div class="card-body pb-2">
+
+                            <h6 class="mb-4">Activity</h6>
+
+                            <div class="form-group">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input" checked="">
+                                    <span class="switcher-indicator">
+                      <span class="switcher-yes"></span>
+                      <span class="switcher-no"></span>
+                    </span>
+                                    <span class="switcher-label">Email me when someone comments on my article</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input" checked="">
+                                    <span class="switcher-indicator">
+                      <span class="switcher-yes"></span>
+                      <span class="switcher-no"></span>
+                    </span>
+                                    <span class="switcher-label">Email me when someone answers on my forum thread</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input">
+                                    <span class="switcher-indicator">
+                      <span class="switcher-yes"></span>
+                      <span class="switcher-no"></span>
+                    </span>
+                                    <span class="switcher-label">Email me when someone follows me</span>
+                                </label>
+                            </div>
+                        </div>
+                        <hr class="border-light m-0">
+                        <div class="card-body pb-2">
+
+                            <h6 class="mb-4">Application</h6>
+
+                            <div class="form-group">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input" checked="">
+                                    <span class="switcher-indicator">
+                      <span class="switcher-yes"></span>
+                      <span class="switcher-no"></span>
+                    </span>
+                                    <span class="switcher-label">News and announcements</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input">
+                                    <span class="switcher-indicator">
+                      <span class="switcher-yes"></span>
+                      <span class="switcher-no"></span>
+                    </span>
+                                    <span class="switcher-label">Weekly product updates</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="switcher">
+                                    <input type="checkbox" class="switcher-input" checked="">
+                                    <span class="switcher-indicator">
+                      <span class="switcher-yes"></span>
+                      <span class="switcher-no"></span>
+                    </span>
+                                    <span class="switcher-label">Weekly blog digest</span>
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+    <th:block th:include="fragment/footer"></th:block>
+    <script >
+        $(document).ready(function(){
+            $("input").change(function(){
+                document.getElementById("myForm").submit();
+                alert("Changes made!");
+            });
+        });
+        $(document).ready(function(){
+            $("textarea").change(function(){
+                document.getElementById("myForm").submit();
+                alert("Changes made!");
+            });
+        });
+       // document.getElementById("files").disabled = true;
+
+       // function enableBtn() {
+      //      document.getElementById("files").disabled = false;
+       // }
+//
+    </script>
+</div>
+</html>

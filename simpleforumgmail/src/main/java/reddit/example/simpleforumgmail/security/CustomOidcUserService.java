@@ -2,7 +2,6 @@ package reddit.example.simpleforumgmail.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -15,10 +14,7 @@ import java.util.Map;
 
 @Service
 public class CustomOidcUserService extends OidcUserService {
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+
 
     @Autowired
     private UserRepository userRepository;

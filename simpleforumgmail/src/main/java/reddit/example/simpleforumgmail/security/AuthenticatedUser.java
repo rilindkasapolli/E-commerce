@@ -7,13 +7,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import reddit.example.simpleforumgmail.models.Role;
 import reddit.example.simpleforumgmail.models.User;
 import reddit.example.simpleforumgmail.services.RoleServiceM;
-
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
 
 public class AuthenticatedUser extends org.springframework.security.core.userdetails.User {
+
     @Autowired
     public static RoleServiceM roleServiceM;
 

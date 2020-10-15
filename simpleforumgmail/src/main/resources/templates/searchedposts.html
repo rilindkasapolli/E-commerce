@@ -16,9 +16,11 @@
 
                                 <h2>Reddit</h2>
                                 <a th:href="${'/'}">HOME</a>
+                                <a th:href="${'/profile/'+#authentication.name }" sec:authorize="isAuthenticated()">PROFILE</a>
                                 <a th:href="${'/subreddit/new'}" sec:authorize="hasRole('ROLE_ADMIN')">ADD SUBREDDIT</a>
                                 <a th:href="${'login'}" sec:authorize="!isAuthenticated()">LOGIN</a>
                                 <a th:href="${'/registration'}" sec:authorize="!isAuthenticated()">REGISTER</a>
+
 
                                 <form th:action="@{/logout}" method="post"
                                       sec:authorize="hasAnyRole('ROLE_ADMIN','ROLE_USER')">

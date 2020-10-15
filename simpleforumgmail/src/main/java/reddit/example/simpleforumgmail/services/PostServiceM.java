@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reddit.example.simpleforumgmail.models.Post;
 import reddit.example.simpleforumgmail.repository.PostRepository;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +39,6 @@ public class PostServiceM implements PostService {
     public void deletePost(Integer id) {
         postRepository.deleteById(id);
     }
-
 
     private static final Logger logger = LoggerFactory.getLogger("DocStorageService.class");
 

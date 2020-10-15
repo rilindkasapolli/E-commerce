@@ -1,22 +1,26 @@
 package reddit.example.simpleforumgmail.controllers;
 
-
+import org.apache.tika.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import reddit.example.simpleforumgmail.models.ConfirmationToken;
 import reddit.example.simpleforumgmail.models.User;
 import reddit.example.simpleforumgmail.repository.ConfirmationTokenRepository;
-
 import reddit.example.simpleforumgmail.services.EmailSenderService;
-
 import reddit.example.simpleforumgmail.services.UserServiceM;
 
-@Controller
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
+@Controller
 public class UserRegistrationController {
 
     @Autowired
@@ -27,9 +31,7 @@ public class UserRegistrationController {
     private ConfirmationTokenRepository confirmationTokenRepository;
 
 
-    public UserRegistrationController(UserServiceM userService) {
-        this.userService = userService;
-    }
+
 
     @GetMapping("/registration")
 
@@ -39,7 +41,7 @@ public class UserRegistrationController {
     }
 
     @PostMapping("/registrationn")
-    public ModelAndView registerUser(ModelAndView modelAndView, User user) {
+    public ModelAndView registerUser(ModelAndView modelAndView, User user)  {
 
         User existingUser = userService.findByEmailIgnoreCase(user.getEmail());
         if (existingUser != null) {
@@ -71,13 +73,21 @@ public class UserRegistrationController {
     }
 
     @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) {
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token") String confirmationToken) throws IOException {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationtoken(confirmationToken);
 
         if (token != null) {
             User user = userService.findByEmailIgnoreCase(token.getUser().getEmail());
             user.setEnabled(true);
+            user.setProfilepicture(null);
+            File file = new File("C:\\dev\\simpleforumgmail\\src\\main\\resources\\images\\defaultpfp.png");
+            FileInputStream input = new FileInputStream(file);
+            MultipartFile multipartFile = new MockMultipartFile("file",
+                    file.getName(), "image/png", IOUtils.toByteArray(input));
+            byte[] image = multipartFile.getBytes();
+            user.setProfilepicture(image);
             userService.saveUsers(user);
+            confirmationTokenRepository.delete(token);
 
             modelAndView.setViewName("accountVerified");
         } else {

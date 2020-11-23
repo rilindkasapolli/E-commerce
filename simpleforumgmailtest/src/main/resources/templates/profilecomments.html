@@ -10,30 +10,25 @@
                         <div class="row">
                             <div class="p-xs col-6 col-sm-3 text-info ">
 
-                                <a th:href="*{'/profile/'+ email +'/posts'}" th:text="POSTS"></a>
-
-                                <span></span>
-                            </div>
-                            <div class="p-xs col-6 col-sm-3 text-info ">
-
                                 <a th:href="*{'/'}" th:text="HOME"></a>
 
                                 <span></span>
                             </div>
-
                             <div class="p-xs col-6 col-sm-3 text-info ">
 
-                                <a th:href="${'/profile/'+user.email+'/comments'}" th:text="COMMENTS"></a>
+                                <a th:href="${'/profile/'+ email +'/posts'}" th:text="POSTS"></a>
                                 <span></span>
                             </div>
                             <div class="p-xs col-6 col-sm-3 text-info ">
-                                <div th:if="*{email == #authentication.getName()}">
-                                    <a th:href="*{'/profile/'+ email +'/settings'}" th:text="SETTINGS"  ></a>
-                                </div>
-                                <div th:unless="*{email== #authentication.getName()}">
 
-                                </div>
+                                <a th:href="${'/profile/'+ email +'/comments'}" th:text="COMMENTS"></a>
+                                <span></span>
+                            </div>
+                            <div class="p-xs col-6 col-sm-3 text-info ">
 
+                                <a th:href="*{'/profile/'+ email +'/settings'}" th:text="SETTINGS"></a>
+
+                                <span></span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +49,7 @@
                             <div class="">
                                 <img class="" src="data:image/jpg;base64,${profilepicture}"
                                      onerror="this.style.display='none'" id="postImageee"
-                                     th:src="@{'data:image/jpeg;base64,' + ${image}}" style="width:100px;height:100px;" />
+                                     th:src="@{'data:image/jpeg;base64,' + ${imagee}}" style="width:100px;height:100px;" />
                             </div>
                             <h4 class="text-center h6 mt-2" th:text="*{name}"></h4>
                             <p class="text-center small" th:text="${roles}">UI/UX Designer</p>
@@ -84,45 +79,47 @@
 
                     <div class="profile-timeline">
                         <ul class="list-unstyled">
-                            <li class="timeline-item" th:each="p : ${posts}">
+                            <li class="timeline-item" th:each=" c : ${usercomment}">
                                 <div class="card card-white grid-margin">
                                     <div class="card-body">
                                         <div >
-                                        <div class="timeline-item-header">
-                                            <small th:text="${'posted ' + p.name + ' ' + p.givenTwoDateTimes(p.timeCreated,dateNow) + 'ago'}"></small>
-                                            <div class="">
-                                                <img class="" src="data:image/jpg;base64,${profilepicture}"
-                                                     onerror="this.style.display='none'" id="postImagee"
-                                                     th:src="@{'data:image/jpeg;base64,' + ${image}}" style="width:40px;height:40px;" />
-                                            </div>
-                                            <p th:text="*{name}"></p>
-                                        </div>
-                                        <div class="forum-item" >
-                                            <div class="row">
-                                                <div class="col-md-9">
-                                                    <div class="forum-icon">
-
-                                                    </div>
-                                                    <a href="forum_post.html" class="forum-item-title" th:text="${p.name}"
-                                                       th:href="${'/subreddit/post/'+ p.postid}">Introductions</a>
-                                                    <div class="forum-sub-title" th:text="${p.description}"></div>
+                                            <div class="timeline-item-header">
+                                                <small th:text="${'commented on ' + c.postname + ' ' + c.givenTwoDateTimes(c.timeCreated,dateNow) + ' ago'}"></small>
+                                                <div class="">
+                                                    <img class="" src="data:image/jpg;base64,${profilepicture}"
+                                                         onerror="this.style.display='none'" id="postImagee"
+                                                         th:src="@{'data:image/jpeg;base64,' + ${imagee}}" style="width:40px;height:40px;" />
                                                 </div>
+                                                <p th:text="*{name}"> </p>
+
+                                            </div>
+                                            <div class="forum-item" >
+                                                <div class="row">
+                                                    <div class="col-md-9">
+                                                        <div class="forum-icon">
+
+                                                        </div>
+                                                        <a href="forum_post.html" class="forum-item-title" th:text="${c.getPostname()}"
+                                                           th:href="${'/subreddit/post/'+ c.getPost()}"></a>
+                                                        <div class="forum-sub-title" th:text="${c.description}">
+                                                        </div>
+                                                    </div>
 
 
-                                                <div class="col-md-3 forum-info">
-                                                    <span class="views-number" th:text="${p.karma}">
+                                                    <div class="col-md-3 forum-info">
+                                                    <span class="views-number" th:text="${c.commentkarma}">
                                                                  890
                                                         </span>
-                                                   <!-- <span class="views-number" th:text="${p.karma}">
+                                                        <!-- <span class="views-number" th:text="${p.karma}">
 
-                                                        </span> -->
-                                                    <div>
-                                                        <small>Likes</small>
+                                                             </span> -->
+                                                        <div>
+                                                            <small>Likes</small>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
 
                                     </div>

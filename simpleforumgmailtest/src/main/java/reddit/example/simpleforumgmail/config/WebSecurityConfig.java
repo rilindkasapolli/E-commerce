@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.client.web.HttpSessionOAuth2Authoriza
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import reddit.example.simpleforumgmail.security.CustomOidcUserService;
 
 
 import javax.sql.DataSource;
@@ -31,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-
+    @Autowired
+    private CustomOidcUserService customOidcUserService;
 
 
     @Bean
@@ -77,7 +79,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(24 * 60 * 60)
                 .and()
-                .exceptionHandling();
+                .exceptionHandling().and().oauth2Login().authorizationEndpoint().authorizationRequestRepository(customAuthorizationRequestRepository())
+                .baseUri("/oauth2/authorization")
+                .and()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*").and().userInfoEndpoint()
+                .oidcUserService(customOidcUserService).and().loginPage("/newLogin");
     }
 
     PersistentTokenRepository persistentTokenRepository() {

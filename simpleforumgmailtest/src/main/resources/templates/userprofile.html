@@ -20,20 +20,16 @@
 
                                 <span></span>
                             </div>
+                            <div class="p-xs col-6 col-sm-3 text-info ">
 
+                                <a th:href="*{'/profile/'+ email +'/settings'}" th:text="SETTINGS"></a>
+
+                                <span></span>
+                            </div>
                             <div class="p-xs col-6 col-sm-3 text-info ">
 
                                 <a th:href="${'/profile/'+user.email+'/comments'}" th:text="COMMENTS"></a>
                                 <span></span>
-                            </div>
-                            <div class="p-xs col-6 col-sm-3 text-info ">
-                                <div th:if="*{email == #authentication.getName()}">
-                                    <a th:href="*{'/profile/'+ email +'/settings'}" th:text="SETTINGS"  ></a>
-                                </div>
-                                <div th:unless="*{email== #authentication.getName()}">
-
-                                </div>
-
                             </div>
                         </div>
                     </div>

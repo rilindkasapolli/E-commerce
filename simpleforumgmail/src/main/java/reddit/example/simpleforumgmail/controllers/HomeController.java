@@ -53,6 +53,12 @@ public class HomeController {
 
         return "index";
     }
+    @GetMapping("/admin/dashboard")
+    public String adminDashboard(Model model) {
+        model.addAttribute("users", userServiceM.listAllUsers());
+
+        return "adminDashboard";
+    }
 
     @GetMapping("/a")
     public String a(@Param("keyword") String keyword, Model model) {

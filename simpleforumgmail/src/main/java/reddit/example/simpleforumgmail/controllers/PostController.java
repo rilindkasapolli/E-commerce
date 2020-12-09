@@ -157,7 +157,12 @@ public class PostController {
 
         return "viewPost";
     }
-
+  //  @PutMapping("/like/{id}")
+   // public void like(@PathVariable("id") int id,Authentication authentication) {
+   //     Post p = postServiceM.getPostById(id);
+   //     int pp= p.getKarma();
+    //    p.setKarma(++pp);
+    //}
 
     @GetMapping("/subreddit/post/upvote/{id}")
     public String upKarma(@PathVariable("id") int id,Authentication authentication) {

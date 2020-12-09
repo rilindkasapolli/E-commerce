@@ -1,0 +1,583 @@
+<head xmlns:th="http://www.thymeleaf.org">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <title>Shop Homepage - Start Bootstrap Template</title>
+
+    <link th:href="@{/css/bootstrap/bootstrap.min.css}" rel="stylesheet"/>
+
+
+    <style>
+        body {
+            margin-top: 20px;
+            background: #eee;
+        }
+
+        textarea {
+            height: 150px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        ul.nav li a, ul.nav li a:visited {
+            color: #1b1e21
+        }
+
+        ul.nav li a:hover, ul.nav li a:active {
+            color: #1b1e21
+        }
+
+        ul.nav li.active a {
+            color: #1b1e21
+        }
+
+        .white-bg {
+            background-color: #ffffff;
+        }
+
+        .page-heading {
+            border-top: 0;
+            padding: 0 10px 20px 10px;
+        }
+
+        .forum-post-container .media {
+            margin: 10px 10px 10px 10px;
+            padding: 20px 10px 20px 10px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .forum-avatar {
+            float: left;
+            margin-right: 20px;
+            text-align: center;
+            width: 110px;
+        }
+
+        .forum-avatar .img-circle {
+            height: 48px;
+            width: 48px;
+        }
+
+        .author-info {
+            color: #676a6c;
+            font-size: 11px;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .forum-post-info {
+            padding: 9px 12px 6px 12px;
+            background: #f9f9f9;
+            border: 1px solid #f1f1f1;
+        }
+
+        .media-body > .media {
+            background: #f9f9f9;
+            border-radius: 3px;
+            border: 1px solid #f1f1f1;
+        }
+
+        .forum-post-container .media-body .photos {
+            margin: 10px 0;
+        }
+
+        .forum-photo {
+            max-width: 140px;
+            border-radius: 3px;
+        }
+
+        .media-body > .media .forum-avatar {
+            width: 70px;
+            margin-right: 10px;
+        }
+
+        .media-body > .media .forum-avatar .img-circle {
+            height: 38px;
+            width: 38px;
+        }
+
+        .mid-icon {
+            font-size: 66px;
+        }
+
+        .forum-item {
+            margin: 40px 0;
+            padding: 10px 0 20px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .views-number {
+            font-size: 24px;
+            line-height: 18px;
+            font-weight: 400;
+        }
+
+        .forum-container,
+        .forum-post-container {
+            padding: 30px !important;
+        }
+
+        .forum-item small {
+            color: #999;
+        }
+
+        .forum-item .forum-sub-title {
+            color: #999;
+            margin-left: 50px;
+        }
+
+        .forum-title {
+            margin: 15px 0 15px 0;
+        }
+
+        .forum-info {
+            text-align: center;
+        }
+
+        .forum-desc {
+            color: #999;
+        }
+
+        .forum-icon {
+            float: left;
+            width: 30px;
+            margin-right: 20px;
+            text-align: center;
+        }
+
+        #submitcomment {
+            margin-top: 5%
+        }
+
+        a.forum-item-title {
+            color: inherit;
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        a.forum-item-title:hover {
+            color: inherit;
+        }
+
+        .forum-icon .fa {
+            font-size: 30px;
+            margin-top: 8px;
+            color: #9b9b9b;
+        }
+
+        .forum-item.active .fa {
+            color: #1ab394;
+        }
+
+        .forum-item.active a.forum-item-title {
+            color: #1ab394;
+        }
+
+        @media (max-width: 992px) {
+            .forum-info {
+                margin: 15px 0 10px 0;
+                /* Comment this is you want to show forum info in small devices */
+                display: none;
+            }
+
+            .forum-desc {
+                float: none !important;
+            }
+        }
+
+        img[src=""] {
+            display: none;
+        }
+
+        #inputtitle {
+
+            margin-top: 3%;
+            margin-left: 3%;
+            margin-right: 3%;
+
+        }
+
+        .alink {
+            margin-left: 10%;
+        }
+
+
+        .ibox {
+            clear: both;
+            margin-bottom: 25px;
+            margin-top: 0;
+            padding: 0;
+        }
+
+        .ibox.collapsed .ibox-content {
+            display: none;
+        }
+
+        .ibox.collapsed .fa.fa-chevron-up:before {
+            content: "\f078";
+        }
+
+        .ibox.collapsed .fa.fa-chevron-down:before {
+            content: "\f077";
+        }
+
+        .ibox:after,
+        .ibox:before {
+            display: table;
+        }
+
+        #userposted {
+            margin-left: 5%;
+        }
+
+        #comdesc {
+
+        }
+
+        #comments {
+            margin-top: 5%;
+        }
+
+        .ibox-title {
+            -moz-border-bottom-colors: none;
+            -moz-border-left-colors: none;
+            -moz-border-right-colors: none;
+            -moz-border-top-colors: none;
+            background-color: #ffffff;
+            border-color: #e7eaec;
+            border-image: none;
+            border-style: solid solid none;
+            border-width: 3px 0 0;
+            color: inherit;
+            margin-bottom: 0;
+            padding: 14px 15px 7px;
+            min-height: 48px;
+        }
+
+        .ibox-content {
+            background-color: #ffffff;
+            color: inherit;
+            padding: 15px 20px 20px 20px;
+            border-color: #e7eaec;
+            border-image: none;
+            border-style: solid solid none;
+            border-width: 1px 0;
+        }
+
+        .ibox-footer {
+            color: inherit;
+            border-top: 1px solid #e7eaec;
+            font-size: 90%;
+            background: #ffffff;
+            padding: 10px 15px;
+        }
+
+        .message-input {
+            height: 90px !important;
+        }
+
+        .form-control, .single-line {
+            background-color: #FFFFFF;
+            background-image: none;
+            border: 1px solid #e5e6e7;
+            border-radius: 1px;
+            color: inherit;
+            display: block;
+            padding: 6px 12px;
+            transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .text-navy {
+            color: #1ab394;
+        }
+
+        .mid-icon {
+            font-size: 66px !important;
+        }
+
+        .m-b-sm {
+            margin-bottom: 10px;
+        }
+
+
+        .social-icon {
+            margin: 0 5px 5px 0;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            line-height: 40px !important;
+            color: #555;
+            text-shadow: none;
+            border-radius: 3px;
+            overflow: hidden;
+            display: block;
+            float: left;
+            text-align: center;
+            border: 1px solid #AAA;
+        }
+        .social-icon:hover {
+            border-color: transparent;
+        }
+
+        .social-icon i {
+            display: block;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            line-height: 40px;
+            position: relative;
+        }
+        .social-icon i:last-child {
+            color: #FFF !important;
+        }
+        a,a:hover {
+            text-decoration: none;
+        }
+        .social-icon:hover i:first-child {
+            margin-top: -40px;
+        }
+
+        /***social icons lg (big)***/
+        .social-icon-lg {
+            margin: 0 5px 5px 0;
+            width: 60px;
+            height: 60px;
+            font-size: 30px;
+            line-height: 60px !important;
+            color: #555;
+            text-shadow: none;
+            border-radius: 3px;
+            overflow: hidden;
+            display: block;
+            float: left;
+            text-align: center;
+            border: 1px solid #AAA;
+        }
+        .social-icon-lg:hover {
+            border-color: transparent;
+        }
+
+        .social-icon-lg i {
+            display: block;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            line-height: 60px;
+            position: relative;
+        }
+        .social-icon-lg i:last-child {
+            color: #FFF !important;
+        }
+
+        .social-icon-lg:hover i:first-child {
+            margin-top: -60px;
+        }
+
+        /***social icons small***/
+        .social-icon-sm {
+            margin: 0 5px 5px 0;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            line-height: 30px !important;
+            color: #555;
+            text-shadow: none;
+            border-radius: 3px;
+            overflow: hidden;
+            display: block;
+            float: left;
+            text-align: center;
+            border: 1px solid #AAA;
+        }
+        .social-icon-sm:hover {
+            border-color: transparent;
+        }
+
+        .social-icon-sm i {
+            display: block;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            line-height: 30px;
+            position: relative;
+        }
+        .social-icon-sm i:last-child {
+            color: #FFF !important;
+        }
+
+        .social-icon-sm:hover i:first-child {
+            margin-top: -30px;
+        }
+
+        si-border {
+            border: 1px solid #AAA !important;
+        }
+
+        .si-border-round {
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .si-dark-round {
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .si-gray-round {
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .si-gray {
+            background: #f3f3f3;
+            border: 0px;
+        }
+
+        .si-dark {
+            background-color: #333;
+            border: 0px !important;
+            color: #fff !important;
+        }
+
+        /**icons hover colored**/
+        .si-colored-facebook, .si-facebook:hover {
+            background-color: #3B5998 !important;
+        }
+
+        .si-colored-twitter, .si-twitter:hover {
+            background-color: #00ACEE !important;
+        }
+
+        .si-colored-google-plus, .si-g-plus:hover {
+            background-color: #DD4B39 !important;
+        }
+
+        .si-colored-skype, .si-skype:hover {
+            background-color: #00AFF0 !important;
+        }
+
+        .si-linkedin:hover, .si-colored-linkedin {
+            background-color: #0E76A8 !important;
+        }
+
+        .si-pin:hover, .si-colored-pinterest {
+            background-color: #C8232C !important;
+        }
+
+        .si-rss:hover, .si-colored-rss {
+            background-color: #EE802F !important;
+        }
+
+        .si-pinterest:hover, .si-colored-pinterest {
+            background-color: #C8232C !important;
+        }
+
+        .si-tumblr:hover, .si-colored-tumblr {
+            background-color: #34526F !important;
+        }
+
+        .si-vimeo:hover, .si-colored-vimeo {
+            background-color: #86C9EF !important;
+        }
+
+        .si-digg:hover, .si-colored-digg {
+            background-color: #191919 !important;
+        }
+
+        .si-instagram:hover, .si-colored-instagram {
+            background-color: #3F729B !important;
+        }
+
+        .si-flickr:hover, .si-colored-flickr {
+            background-color: #FF0084 !important;
+        }
+
+        .si-paypal:hover, .si-colored-paypal {
+            background-color: #00588B !important;
+        }
+
+        .si-yahoo:hover, .si-colored-yahoo {
+            background-color: #720E9E !important;
+        }
+
+        .si-android:hover, .si-colored-andriod {
+            background-color: #A4C639 !important;
+        }
+
+        .si-appstore:hover, .si-colored-apple {
+            background-color: #000 !important;
+        }
+
+        .si-dropbox:hover {
+            background-color: #3D9AE8 !important;
+        }
+
+        .si-dribbble:hover, .si-colored-dribbble {
+            background-color: #EA4C89 !important;
+        }
+
+        .si-soundcloud:hover, .si-colored-soundcoloud {
+            background-color: #F70 !important;
+        }
+
+        .si-xing:hover, .si-colored-xing {
+            background-color: #126567 !important;
+        }
+
+        .si-phone:hover, .si-colored-phone {
+            background-color: #444 !important;
+        }
+
+        .si-behance:hover, .si-colored-behance {
+            background-color: #053eff !important;
+        }
+
+        .si-github:hover, .si-colored-github {
+            background-color: #171515 !important;
+        }
+
+        .si-stumbleupon:hover, .si-colored-stumbleupon {
+            background-color: #F74425 !important;
+        }
+
+        .si-email:hover, .si-colored-email {
+            background-color: #6567A5 !important;
+        }
+
+        .si-wordpress:hover, .si-colored-wordpress {
+            background-color: #1E8CBE !important;
+        }
+
+        .social-shortcodes .left-heading {
+            font-size: 30px;
+            text-transform: uppercase;
+        }
+
+        .grid-boxed {
+            border: 1px solid transparent;
+            padding: 20px;
+        }
+
+        .grid-boxed:hover {
+            border: 1px dashed #999;
+        }
+
+
+
+    </style>
+</head>

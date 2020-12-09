@@ -25,10 +25,13 @@
                                 <span></span>
                             </div>
                             <div class="p-xs col-6 col-sm-3 text-info ">
+                                <div th:if="*{email == #authentication.getName()}">
+                                    <a th:href="*{'/profile/'+ email +'/settings'}" th:text="SETTINGS"  ></a>
+                                </div>
+                                <div th:unless="*{email== #authentication.getName()}">
 
-                                <a th:href="*{'/profile/'+ email +'/settings'}" th:text="SETTINGS"></a>
+                                </div>
 
-                                <span></span>
                             </div>
                         </div>
                     </div>
